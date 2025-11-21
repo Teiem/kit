@@ -47,8 +47,9 @@ export {};
 /**
  * Generate app types interface extension
  * @param {import('types').ManifestData} manifest_data
+ * @param {import('types').ValidatedKitConfig} config
  */
-function generate_app_types(manifest_data) {
+function generate_app_types(manifest_data, config) {
 	/** @type {Set<string>} */
 	const pathnames = new Set();
 
@@ -111,8 +112,9 @@ function generate_app_types(manifest_data) {
 		`\t\tRouteParams(): {\n\t\t\t${dynamic_routes.join(';\n\t\t\t')}\n\t\t};`,
 		`\t\tLayoutParams(): {\n\t\t\t${layouts.join(';\n\t\t\t')}\n\t\t};`,
 		`\t\tPathname(): ${Array.from(pathnames).join(' | ')};`,
-		'\t\tResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes[\'Pathname\']>}`;',
+		'\t\tResolvedPathname(): `' + config.paths.base + "${ReturnType<AppTypes['Pathname']>}`;",
 		`\t\tAsset(): ${assets.concat('string & {}').join(' | ')};`,
+		`\t\tBasePath(): "${config.paths.base}"`,
 		'\t}',
 		'}'
 	].join('\n');
@@ -124,7 +126,7 @@ function generate_app_types(manifest_data) {
  * @param {import('types').ManifestData} manifest_data
  */
 export function write_non_ambient(config, manifest_data) {
-	const app_types = generate_app_types(manifest_data);
+	const app_types = generate_app_types(manifest_data, config);
 	const content = [template, app_types].join('\n\n');
 
 	write_if_changed(path.join(config.outDir, 'non-ambient.d.ts'), content);

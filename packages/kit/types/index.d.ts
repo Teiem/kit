@@ -3008,7 +3008,7 @@ declare module '$app/navigation' {
 	 * @param url Where to navigate to. Note that if you've set [`config.kit.paths.base`](https://svelte.dev/docs/kit/configuration#paths) and the URL is root-relative, you need to prepend the base path if you want to navigate within the app.
 	 * @param {Object} opts Options related to the navigation
 	 * */
-	export function goto(url: string | URL, opts?: {
+	export function goto(url: `${import("$app/types").BasePath}${import("$app/types").Pathname}` | URL, opts?: {
 		replaceState?: boolean | undefined;
 		noScroll?: boolean | undefined;
 		keepFocus?: boolean | undefined;
@@ -3091,7 +3091,7 @@ declare module '$app/navigation' {
 }
 
 declare module '$app/paths' {
-	import type { RouteId, Pathname, ResolvedPathname, RouteParams, Asset } from '$app/types';
+	import type { RouteId, Pathname, ResolvedPathname, BasePath, RouteParams, Asset } from '$app/types';
 	/**
 	 * A string that matches [`config.kit.paths.base`](https://svelte.dev/docs/kit/configuration#paths).
 	 *
@@ -3099,7 +3099,7 @@ declare module '$app/paths' {
 	 *
 	 * @deprecated Use [`resolve(...)`](https://svelte.dev/docs/kit/$app-paths#resolve) instead
 	 */
-	export let base: '' | `/${string}`;
+	export let base: BasePath;
 
 	/**
 	 * An absolute path that matches [`config.kit.paths.assets`](https://svelte.dev/docs/kit/configuration#paths).
@@ -3515,6 +3515,7 @@ declare module '$app/types' {
 		Pathname(): string;
 		ResolvedPathname(): string;
 		Asset(): string;
+		BasePath(): string;
 	}
 
 	/**
@@ -3550,6 +3551,11 @@ declare module '$app/types' {
 	 * A union of all the filenames of assets contained in your `static` directory.
 	 */
 	export type Asset = ReturnType<AppTypes['Asset']>;
+
+	/**
+	 * The base path of your app, equivalent to `config.kit.paths.base`.
+	 */
+	export type BasePath = ReturnType<AppTypes['BasePath']>;
 }
 
 //# sourceMappingURL=index.d.ts.map

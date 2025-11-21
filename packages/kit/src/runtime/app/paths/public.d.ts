@@ -1,4 +1,4 @@
-import { RouteId, Pathname, ResolvedPathname } from '$app/types';
+import { RouteId, Pathname, ResolvedPathname, BasePath } from '$app/types';
 import { ResolveArgs } from './types.js';
 
 export { resolve, asset } from './client.js';
@@ -10,7 +10,7 @@ export { resolve, asset } from './client.js';
  *
  * @deprecated Use [`resolve(...)`](https://svelte.dev/docs/kit/$app-paths#resolve) instead
  */
-export let base: '' | `/${string}`;
+export let base: BasePath;
 
 /**
  * An absolute path that matches [`config.kit.paths.assets`](https://svelte.dev/docs/kit/configuration#paths).

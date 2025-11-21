@@ -97,6 +97,7 @@ declare module '$app/types' {
 		Pathname(): string;
 		ResolvedPathname(): string;
 		Asset(): string;
+		BasePath(): string;
 	}
 
 	/**
@@ -132,4 +133,9 @@ declare module '$app/types' {
 	 * A union of all the filenames of assets contained in your `static` directory.
 	 */
 	export type Asset = ReturnType<AppTypes['Asset']>;
+
+	/**
+	 * The base path of your app, equivalent to `config.kit.paths.base`.
+	 */
+	export type BasePath = ReturnType<AppTypes['BasePath']>;
 }
